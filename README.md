@@ -20,7 +20,16 @@ The calibration process first involved scaling the sound intensity measurement t
 
 However, the exact value of the dB SPL scale was unknown. This value was measured using a sound level meter. The sound level meter measured the sound level of output sound from the headphones. The system was then set up in a soundproof booth to ensure that outside noise does not affect this measurement. The equation below was then used to manipulate the sounds and play them at a desired dB SPL level.
 
-Xd = \frac{x(t)}{RMS}*20*log10 (Calibrated dB SPL -Desired dB SPL)
-        Equation 1: Calibration Formula used in algorithm
+The next step is playing the calibrated sounds from the iPad to KEMAR. KEMAR is a head torso stimulator that is used for acoustic research. The calibrated pure tone with a frequency of 1kHz was played to KEMAR via headphones. The computer recorded the output response from KEMAR. 
 
+The output signal was analyzed using a transfer function, and maximum length sequence. MLS is a useful technique used in signal processing for measuring the impulse response of a linear system using the MLS sequence as an input to the system. The MLS sequence itself is a pseudorandom signal that consists of values from -1 to 1[2]. The pseudorandom samples of the maximum length sequence were collected from the output response from the KEMAR. 
+![image](https://user-images.githubusercontent.com/62814852/153279346-3c384d41-dcf9-4a2c-9a48-51cee72db1e0.png)
+Figure 1: MLS sequence for 1kHz pure tone
+
+The above picture is the MLS sequence of the 1kHz pure tone. The system's input is the MLS sequence, and the impulse response is the output of the system. The impulse response of the system is in the frequency domain [2]. The system uses Fourier transform to transform the function into the frequency domain. 
+
+![image](https://user-images.githubusercontent.com/62814852/153279398-9f618280-daef-4791-aa91-05440a0339bc.png)
+Figure 2: Impulse response of the system to an input of 1kHz pure tone
+
+The above picture is the impulse response of playing a 1kHz sound for a certain period. The impulse response is expected to have a flat frequency response.  However, in the picture it can be observed that the frequency response is not flat. For instance, the amplitude at 2kHz frequency and 5 kHz frequency are not the same. It is expected that both frequencies have the same magnitude. The transfer function applied in the system helps identify which frequencies need to be compensated to have the desired magnitude. This compensation is done in the original iPad algorithm. 
 
